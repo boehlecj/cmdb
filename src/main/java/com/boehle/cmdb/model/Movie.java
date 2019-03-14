@@ -2,12 +2,15 @@ package com.boehle.cmdb.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Movie {
+public class Movie extends AbstractEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
@@ -17,14 +20,19 @@ public class Movie {
 	private String name;
 	private String genre;
 	private String year;
-	private String director;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "director_id")
+	private Director director;
+	
 	private double rating;
+	private String description;
 	
 	public Movie() {
 		super();
 	}
 
-	public Movie(String name, String genre, String year, String director, double rating) {
+	public Movie(String name, String genre, String year, Director director, double rating, String description) {
 		super();
 		this.name = name;
 		this.genre = genre;
@@ -33,8 +41,8 @@ public class Movie {
 		this.rating = rating;
 	}
 	
-	public Movie(int id, String name, String genre, String year, String director, double rating) {	
-		this(name, genre, year, director, rating);
+	public Movie(long id, String name, String genre, String year, Director director, double rating, String description) {	
+		this(name, genre, year, director, rating, description);
 		this.id = id;
 	}
 
@@ -70,11 +78,11 @@ public class Movie {
 		this.year = year;
 	}
 	
-	public String getDirector() {
+	public Director getDirector() {
 		return director;
 	}
 	
-	public void setDirector(String director) {
+	public void setDirector(Director director) {
 		this.director = director;
 	}
 
@@ -84,6 +92,14 @@ public class Movie {
 
 	public void setRating(double rating) {
 		this.rating = rating;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.boehle.cmdb.service;
+package com.boehle.cmdb.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
